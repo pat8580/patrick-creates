@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 fs.mkdirSync('dist/server',{recursive:true});fs.mkdirSync('dist/.openai',{recursive:true});
 const page=fs.readFileSync('worker/page.html','utf8');
-const assets=Object.fromEntries(['hero','about','hey-stars-cover','hey-stars-full','friez-cover','friez-full'].map(n=>['/'+n+'.webp',fs.readFileSync('assets/'+n+'.webp').toString('base64')]));
+const assets=Object.fromEntries(['hero','about','hey-stars-cover','hey-stars-full','friez-cover','friez-full','sozai-cover','sozai-full'].map(n=>['/'+n+'.webp',fs.readFileSync('assets/'+n+'.webp').toString('base64')]));
 const backend=fs.readFileSync('worker/backend.mjs','utf8').replace('export async function','async function').replace('export async function','async function');
 fs.writeFileSync('dist/server/index.js',backend+'\nconst page='+JSON.stringify(page)+';\nconst assets='+JSON.stringify(assets)+';\nexport default {scheduled,async fetch(request,env,ctx){const result=await api(request,env,ctx);if(result)return result;const path=new URL(request.url).pathname;if(assets[path])return new Response(Uint8Array.from(atob(assets[path]),c=>c.charCodeAt(0)),{headers:{"Content-Type":"image/webp","Cache-Control":"public,max-age=86400"}});if(path!=="/")return new Response("Not found",{status:404});return new Response(page,{headers:{"Content-Type":"text/html;charset=utf-8","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin"}})}};');
 fs.copyFileSync('.openai/hosting.json','dist/.openai/hosting.json');
