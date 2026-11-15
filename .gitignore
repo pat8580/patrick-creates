@@ -1,3 +1,5 @@
 dist/
 work/
 .env*
+public/
+.vercel/

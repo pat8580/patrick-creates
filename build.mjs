@@ -5,3 +5,9 @@ const assets=Object.fromEntries(['hero','about','hey-stars-cover','hey-stars-ful
 const backend=fs.readFileSync('worker/backend.mjs','utf8').replace('export async function','async function').replace('export async function','async function');
 fs.writeFileSync('dist/server/index.js',backend+'\nconst page='+JSON.stringify(page)+';\nconst assets='+JSON.stringify(assets)+';\nexport default {scheduled,async fetch(request,env,ctx){const result=await api(request,env,ctx);if(result)return result;const path=new URL(request.url).pathname;if(assets[path])return new Response(Uint8Array.from(atob(assets[path]),c=>c.charCodeAt(0)),{headers:{"Content-Type":"image/webp","Cache-Control":"public,max-age=86400"}});if(path!=="/")return new Response("Not found",{status:404});return new Response(page,{headers:{"Content-Type":"text/html;charset=utf-8","X-Content-Type-Options":"nosniff","Referrer-Policy":"strict-origin-when-cross-origin"}})}};');
 fs.copyFileSync('.openai/hosting.json','dist/.openai/hosting.json');
+
+// Vercel serves this static output alongside api/enquiries.mjs.
+fs.rmSync('public',{recursive:true,force:true});
+fs.mkdirSync('public',{recursive:true});
+fs.writeFileSync('public/index.html',page);
+for(const [path,bytes] of Object.entries(assets))fs.writeFileSync('public'+path,Buffer.from(bytes,'base64'));
