@@ -1,4 +1,4 @@
-# Sites by Patrick — launch setup
+# patrickcreates.it — launch setup
 
 The Site is published privately. The page and durable enquiry saving work. Email and WhatsApp notifications are pending, not live.
 

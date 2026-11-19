@@ -1,1 +1,1 @@
-{"name":"sites-by-patrick","private":true,"type":"module","scripts":{"build":"node build.mjs","test":"node --test test.mjs test-vercel.mjs"}}
+{"name":"patrickcreates-it","private":true,"type":"module","scripts":{"build":"node build.mjs","test":"node --test test.mjs test-vercel.mjs"}}

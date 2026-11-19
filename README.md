@@ -1,4 +1,4 @@
-# Sites by Patrick
+# patrickcreates.it
 
 Patrick's responsive personal branding website and landing page portfolio.
 
