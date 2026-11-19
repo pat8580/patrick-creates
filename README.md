@@ -53,3 +53,11 @@ Configure server-side environment variables for the enquiry function:
 Redeploy after adding these values. The Vercel function forwards enquiries to the existing backend, which retains durable lead storage, duplicate protection, and notification jobs. Without backend configuration the site still builds, but form submission returns a recoverable error and keeps entered details. Verify a real test submission after configuration. Email and WhatsApp provider setup remains as described in `SETUP.md`.
 
 The npm `Unknown env config "cache-dir"` warning in the supplied Vercel logs comes from the hosting environment; it did not cause the deployment failure. The output directory error was the blocking failure.
+
+## Deployment verification
+
+Run `npm run check:deployment -- https://patrick-creates.vercel.app` to validate live image responses, internal section links, and backend validation readiness. This sends an empty, invalid enquiry payload, which never creates a lead. A nonzero exit indicates a broken asset/link or an enquiry endpoint that is not ready. Proxy-based Node environments may need `NODE_USE_ENV_PROXY=1`.
+
+Browser QA covered desktop, tablet, and phone widths (1440, 768, 390, and 320 pixels), all seven portfolio previews, zoom and close controls, the wordmark, and form error retention. All 16 live WebP images loaded. Display fixes remove horizontal document overflow, replace unsupported arrow glyphs with SVG, make zoom always enlarge the design, and add a favicon.
+
+**Outstanding:** the Vercel enquiry endpoint currently returns HTTP 503 because `ENQUIRY_BACKEND_URL` is not set. Set it and the private backend's `SITES_BACKEND_TOKEN` in Vercel, redeploy, and verify a saved test lead. Email and WhatsApp receipts also remain unverified pending the provider setup in `SETUP.md`.
